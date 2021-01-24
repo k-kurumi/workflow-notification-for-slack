@@ -13,7 +13,7 @@
 
 import * as core from '@actions/core'
 import {context, getOctokit} from '@actions/github'
-import {ActionsListJobsForWorkflowRunResponseData} from '@octokit/types'
+// import {ActionsListJobsForWorkflowRunResponseData} from '@octokit/types'
 import {IncomingWebhook} from '@slack/webhook'
 import {MessageAttachment} from '@slack/types'
 
@@ -82,7 +82,7 @@ async function main(): Promise<void> {
   })
 
   const completed_jobs = jobs_response.jobs.filter(
-    job => job.status === 'completed'
+    job => job.status === 'completed' && job.conclusion !== 'skipped'
   )
 
   // Configure slack attachment styling
