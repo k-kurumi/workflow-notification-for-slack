@@ -9430,14 +9430,15 @@ function main() {
         let title_link = `${workflowRun.repository.html_url}/tree/${workflowRun.head_branch}`;
         // Example: Workflow: My Workflow #14 completed in `1m 30s`
         const detailsString = `${github_1.context.workflow}${workflowRunUrl} completed in *${workflowProcessingTime}*\n`;
-        // eslint-disable-next-line no-console
-        console.log(workflowRun.pull_requests);
         // Build Pull Request string if required
-        const pullRequests = workflowRun.pull_requests.map(pr => ({
-            url: `${workflowRun.repository.html_url}/pull/${pr.number}`,
-            title: `<${workflowRun.repository.html_url}/pull/${pr.number}|${pr.title}#${pr.number}>`,
-            text: `from \`${pr.head.ref}\` to \`${pr.base.ref}\``
-        }));
+        const pullRequests = workflowRun.pull_requests.map(pr => {
+            var _a, _b;
+            return ({
+                url: `${workflowRun.repository.html_url}/pull/${pr.number}`,
+                title: `<${workflowRun.repository.html_url}/pull/${pr.number}|${(_b = (_a = github_1.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.title) !== null && _b !== void 0 ? _b : ''}#${pr.number}>`,
+                text: `from \`${pr.head.ref}\` to \`${pr.base.ref}\``
+            });
+        });
         if (0 < pullRequests.length) {
             // NOTE: 1個以上入ることある？
             title = pullRequests[0].title;
@@ -9455,7 +9456,7 @@ function main() {
             author_name: process.env.GITHUB_ACTOR,
             title,
             title_link,
-            text: title + detailsString,
+            text: detailsString,
             fields: jobFields,
             footer_icon: 'https://github.githubassets.com/favicon.ico',
             footer: repoUrl
