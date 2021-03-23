@@ -9426,9 +9426,9 @@ function main() {
         const workflowRunUrl = `<${workflowRun.html_url}|#${workflowRun.run_number}>`;
         const commitUrl = `<${commit.html_url}|${commit.sha.substring(0, 6)} >`;
         // Example: Success: AnthonyKinson's `push` on `master` for pull_request
-        let title = `${github_1.context.eventName} on ${branchUrl} ${commitUrl}\n`;
+        let text = `${github_1.context.eventName} on ${branchUrl} ${commitUrl}\n`;
         // Example: Workflow: My Workflow #14 completed in `1m 30s`
-        const detailsString = `${github_1.context.workflow} ${workflowRunUrl} completed in *${workflowProcessingTime}*\n`;
+        const pretext = `${github_1.context.workflow} ${workflowRunUrl} completed in *${workflowProcessingTime}*\n`;
         // Build Pull Request string if required
         const pullRequests = workflowRun.pull_requests.map(pr => {
             var _a, _b;
@@ -9439,7 +9439,7 @@ function main() {
         });
         if (0 < pullRequests.length) {
             // NOTE: 1個以上入ることある？
-            title = pullRequests[0].title;
+            text = pullRequests[0].title;
         }
         // We're using old style attachments rather than the new blocks because:
         // - Blocks don't allow colour indicators on messages
@@ -9447,12 +9447,12 @@ function main() {
         // Build our notification attachment
         const slackAttachment = {
             mrkdwn_in: ['text'],
+            pretext,
             color: resultColor,
             author_icon: `https://github.com/${process.env.GITHUB_ACTOR}.png?size=32`,
             author_link: `https://github.com/${process.env.GITHUB_ACTOR}`,
             author_name: process.env.GITHUB_ACTOR,
-            title,
-            text: detailsString,
+            text,
             fields: jobFields,
             footer_icon: 'https://github.githubassets.com/favicon.ico',
             footer: repoUrl
