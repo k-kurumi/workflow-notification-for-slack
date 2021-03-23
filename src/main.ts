@@ -147,7 +147,8 @@ async function main(): Promise<void> {
 
   // Example: Workflow: My Workflow #14 completed in `1m 30s`
   const detailsString = `${context.workflow}${workflowRunUrl} completed in *${workflowProcessingTime}*\n`
-
+  // eslint-disable-next-line no-console
+  console.log(workflowRun.pull_requests)
   // Build Pull Request string if required
   const pullRequests = (workflowRun.pull_requests as Endpoints['GET /repos/{owner}/{repo}/pulls/{pull_number}']['response']['data'][]).map(
     pr => ({
