@@ -9422,11 +9422,11 @@ function main() {
             end: new Date(workflowRun.updated_at)
         });
         const repoUrl = `<${workflowRun.repository.html_url}|*${workflowRun.repository.full_name}*>`;
-        const branchUrl = `<${workflowRun.repository.html_url}/tree/${workflowRun.head_branch}|*${workflowRun.head_branch}*>`;
+        const branchUrl = `<${workflowRun.repository.html_url}/tree/${workflowRun.head_branch}|${workflowRun.head_branch}>`;
         const workflowRunUrl = `<${workflowRun.html_url}|#${workflowRun.run_number}>`;
         const commitUrl = `<${commit.html_url}|${commit.sha.substring(0, 6)} >`;
         // Example: Success: AnthonyKinson's `push` on `master` for pull_request
-        let title = `*${github_1.context.eventName} on \`${branchUrl}\` ${commitUrl}\n`;
+        let title = `${github_1.context.eventName} on ${branchUrl} ${commitUrl}\n`;
         // Example: Workflow: My Workflow #14 completed in `1m 30s`
         const detailsString = `${github_1.context.workflow} ${workflowRunUrl} completed in *${workflowProcessingTime}*\n`;
         // Build Pull Request string if required
