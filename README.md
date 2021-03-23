@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Slack Workflow Notification
-        uses: Gamesight/slack-workflow-status@master
+        uses: come25136/slack-workflow-status@master
         with:
           # Required Input
           repo_token: ${{secrets.GITHUB_TOKEN}}
@@ -61,4 +61,4 @@ This action can also be used for Pull Request workflows and will include pull re
 <img src="./docs/images/example-pr.png" title="Slack Pull Request Example">
 
 
-_developed and maintained by: [gamesight.io](https://gamesight.io)_
+_developed and maintained by: [come25136.id](https://come25136.id)_
