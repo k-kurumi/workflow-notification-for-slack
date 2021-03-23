@@ -1,4 +1,4 @@
-name: 'Workflow notifications for slack'
+name: 'Workflow notification for slack'
 author: 'come25136'
 description: 'A Github Action for sending Workflow run results to Slack'
 branding:
