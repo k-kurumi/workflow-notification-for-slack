@@ -9430,10 +9430,12 @@ function main() {
         let title_link = `${workflowRun.repository.html_url}/tree/${workflowRun.head_branch}`;
         // Example: Workflow: My Workflow #14 completed in `1m 30s`
         const detailsString = `${github_1.context.workflow}${workflowRunUrl} completed in *${workflowProcessingTime}*\n`;
+        // eslint-disable-next-line no-console
+        console.log(workflowRun.pull_requests);
         // Build Pull Request string if required
         const pullRequests = workflowRun.pull_requests.map(pr => ({
-            url: `${workflowRun.repository.url}/pull/${pr.number}`,
-            title: `<${workflowRun.repository.url}/pull/${pr.number}|${pr.title}#${pr.number}>`,
+            url: `${workflowRun.repository.html_url}/pull/${pr.number}`,
+            title: `<${workflowRun.repository.html_url}/pull/${pr.number}|${pr.title}#${pr.number}>`,
             text: `from \`${pr.head.ref}\` to \`${pr.base.ref}\``
         }));
         if (0 < pullRequests.length) {
