@@ -21,6 +21,7 @@ import {Endpoints} from '@octokit/types'
 type IncludeJobs = 'true' | 'false' | 'on-failure'
 type SlackMessageAttachementFields = MessageAttachment['fields']
 
+// eslint-disable-next-line no-shadow
 enum ResultColors {
   Good = 'good',
   Warning = 'warning',
