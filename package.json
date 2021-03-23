@@ -1,18 +1,18 @@
 {
-  "name": "slack-workflow-notifications",
+  "name": "workflow-notification-for-slack",
   "description": "A Github Action for sending Workflow run results to Slack",
   "version": "1.0.0",
-  "author": "Anthony Kinson",
+  "author": "come25136",
   "license": "MIT",
   "main": "dist/index.js",
   "private": false,
   "bugs": {
-    "url": "https://github.com/come25136/slack-workflow-notifications/issues"
+    "url": "https://github.com/come25136/workflow-notification-for-slack/issues"
   },
-  "homepage": "https://github.com/come25136/slack-workflow-notifications#readme",
+  "homepage": "https://github.com/come25136/workflow-notification-for-slack#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/come25136/slack-workflow-notifications.git"
+    "url": "git+https://github.com/come25136/workflow-notification-for-slack.git"
   },
   "scripts": {
     "build": "ncc build src/main.ts",
