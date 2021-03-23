@@ -9401,9 +9401,9 @@ function main() {
         // Build Job Data Fields
         jobFields !== null && jobFields !== void 0 ? jobFields : (jobFields = completedJobs.map(job => {
             const statusIcons = {
-                success: ':white_check_mark:',
-                cancelled: ':no_entry:',
-                skipped: ':x:'
+                success: '✓',
+                cancelled: '⃠',
+                skipped: '✗'
             };
             const jobIcon = statusIcons[job.conclusion] || '✗';
             const jobProcessingTime = computeDuration({
@@ -9426,23 +9426,20 @@ function main() {
         const workflowRunUrl = `<${workflowRun.html_url}|#${workflowRun.run_number}>`;
         const commitUrl = `<${commit.html_url}|${commit.sha.substring(0, 6)} >`;
         // Example: Success: AnthonyKinson's `push` on `master` for pull_request
-        let title = `*${github_1.context.eventName}* on \`${branchUrl}\` ${commitUrl}\n`;
-        let title_link = `${workflowRun.repository.html_url}/tree/${workflowRun.head_branch}`;
+        let title = `*${github_1.context.eventName} on \`${branchUrl}\` ${commitUrl}\n`;
         // Example: Workflow: My Workflow #14 completed in `1m 30s`
-        const detailsString = `${github_1.context.workflow}${workflowRunUrl} completed in *${workflowProcessingTime}*\n`;
+        const detailsString = `${github_1.context.workflow} ${workflowRunUrl} completed in *${workflowProcessingTime}*\n`;
         // Build Pull Request string if required
         const pullRequests = workflowRun.pull_requests.map(pr => {
             var _a, _b;
             return ({
-                url: `${workflowRun.repository.html_url}/pull/${pr.number}`,
-                title: `<${workflowRun.repository.html_url}/pull/${pr.number}|${(_b = (_a = github_1.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.title) !== null && _b !== void 0 ? _b : ''}#${pr.number}>`,
+                title: `<${workflowRun.repository.html_url}/pull/${pr.number}|${(_b = (_a = github_1.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.title) !== null && _b !== void 0 ? _b : ''} #${pr.number}>`,
                 text: `from \`${pr.head.ref}\` to \`${pr.base.ref}\``
             });
         });
         if (0 < pullRequests.length) {
             // NOTE: 1個以上入ることある？
             title = pullRequests[0].title;
-            title_link = pullRequests[0].url;
         }
         // We're using old style attachments rather than the new blocks because:
         // - Blocks don't allow colour indicators on messages
@@ -9455,7 +9452,6 @@ function main() {
             author_link: `https://github.com/${process.env.GITHUB_ACTOR}`,
             author_name: process.env.GITHUB_ACTOR,
             title,
-            title_link,
             text: detailsString,
             fields: jobFields,
             footer_icon: 'https://github.githubassets.com/favicon.ico',

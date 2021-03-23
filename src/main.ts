@@ -112,9 +112,9 @@ async function main(): Promise<void> {
   // Build Job Data Fields
   jobFields ??= completedJobs.map(job => {
     const statusIcons: {[k: string]: string} = {
-      success: ':white_check_mark:',
-      cancelled: ':no_entry:',
-      skipped: ':x:'
+      success: '✓',
+      cancelled: '⃠',
+      skipped: '✗'
     } as const
 
     const jobIcon = statusIcons[job.conclusion] || '✗'
@@ -142,19 +142,17 @@ async function main(): Promise<void> {
   const commitUrl = `<${commit.html_url}|${commit.sha.substring(0, 6)} >`
 
   // Example: Success: AnthonyKinson's `push` on `master` for pull_request
-  let title = `*${context.eventName}* on \`${branchUrl}\` ${commitUrl}\n`
-  let title_link = `${workflowRun.repository.html_url}/tree/${workflowRun.head_branch}`
+  let title = `*${context.eventName} on \`${branchUrl}\` ${commitUrl}\n`
 
   // Example: Workflow: My Workflow #14 completed in `1m 30s`
-  const detailsString = `${context.workflow}${workflowRunUrl} completed in *${workflowProcessingTime}*\n`
+  const detailsString = `${context.workflow} ${workflowRunUrl} completed in *${workflowProcessingTime}*\n`
 
   // Build Pull Request string if required
   const pullRequests = (workflowRun.pull_requests as Endpoints['GET /repos/{owner}/{repo}/pulls/{pull_number}']['response']['data'][]).map(
     pr => ({
-      url: `${workflowRun.repository.html_url}/pull/${pr.number}`,
       title: `<${workflowRun.repository.html_url}/pull/${pr.number}|${
         context.payload.pull_request?.title ?? ''
-      }#${pr.number}>`,
+      } #${pr.number}>`,
       text: `from \`${pr.head.ref}\` to \`${pr.base.ref}\``
     })
   )
@@ -162,7 +160,6 @@ async function main(): Promise<void> {
   if (0 < pullRequests.length) {
     // NOTE: 1個以上入ることある？
     title = pullRequests[0].title
-    title_link = pullRequests[0].url
   }
 
   // We're using old style attachments rather than the new blocks because:
@@ -177,7 +174,6 @@ async function main(): Promise<void> {
     author_link: `https://github.com/${process.env.GITHUB_ACTOR}`,
     author_name: process.env.GITHUB_ACTOR,
     title,
-    title_link,
     text: detailsString,
     fields: jobFields,
     footer_icon: 'https://github.githubassets.com/favicon.ico',
