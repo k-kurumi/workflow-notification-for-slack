@@ -9426,14 +9426,14 @@ function main() {
         const workflowRunUrl = `<${workflowRun.html_url}|#${workflowRun.run_number}>`;
         const commitUrl = `<${commit.html_url}|${commit.sha.substring(0, 6)} >`;
         // Example: Success: AnthonyKinson's `push` on `master` for pull_request
-        let text = `${github_1.context.eventName} on ${branchUrl} ${commitUrl}\n`;
+        let text = `${github_1.context.eventName} on ${branchUrl} commit:${commitUrl}\n`;
         // Example: Workflow: My Workflow #14 completed in `1m 30s`
-        const pretext = `${github_1.context.workflow} ${workflowRunUrl} completed in *${workflowProcessingTime}*\n`;
+        const pretext = `\`${github_1.context.eventName}\` ${github_1.context.workflow} ${workflowRunUrl} completed in *${workflowProcessingTime}*\n`;
         // Build Pull Request string if required
         const pullRequests = workflowRun.pull_requests.map(pr => {
             var _a, _b;
             return ({
-                title: `<${workflowRun.repository.html_url}/pull/${pr.number}|${(_b = (_a = github_1.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.title) !== null && _b !== void 0 ? _b : ''} #${pr.number}>`,
+                title: `${github_1.context.eventName} <${workflowRun.repository.html_url}/pull/${pr.number}|${(_b = (_a = github_1.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.title) !== null && _b !== void 0 ? _b : ''} #${pr.number}>`,
                 text: `from \`${pr.head.ref}\` to \`${pr.base.ref}\``
             });
         });

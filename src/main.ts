@@ -142,17 +142,17 @@ async function main(): Promise<void> {
   const commitUrl = `<${commit.html_url}|${commit.sha.substring(0, 6)} >`
 
   // Example: Success: AnthonyKinson's `push` on `master` for pull_request
-  let text = `${context.eventName} on ${branchUrl} ${commitUrl}\n`
+  let text = `${context.eventName} on ${branchUrl} commit:${commitUrl}\n`
 
   // Example: Workflow: My Workflow #14 completed in `1m 30s`
-  const pretext = `${context.workflow} ${workflowRunUrl} completed in *${workflowProcessingTime}*\n`
+  const pretext = `\`${context.eventName}\` ${context.workflow} ${workflowRunUrl} completed in *${workflowProcessingTime}*\n`
 
   // Build Pull Request string if required
   const pullRequests = (workflowRun.pull_requests as Endpoints['GET /repos/{owner}/{repo}/pulls/{pull_number}']['response']['data'][]).map(
     pr => ({
-      title: `<${workflowRun.repository.html_url}/pull/${pr.number}|${
-        context.payload.pull_request?.title ?? ''
-      } #${pr.number}>`,
+      title: `${context.eventName} <${workflowRun.repository.html_url}/pull/${
+        pr.number
+      }|${context.payload.pull_request?.title ?? ''} #${pr.number}>`,
       text: `from \`${pr.head.ref}\` to \`${pr.base.ref}\``
     })
   )
