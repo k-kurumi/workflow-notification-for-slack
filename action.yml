@@ -2,8 +2,8 @@ name: 'Workflow notifications for slack'
 author: 'come25136'
 description: 'A Github Action for sending Workflow run results to Slack'
 branding:
-  icon: message-square
-  color: blue
+  icon: bell
+  color: black
 inputs:
   repo_token:
     description: 'You must manually pass in secrets.GITHUB_TOKEN'
