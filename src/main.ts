@@ -142,10 +142,10 @@ async function main(): Promise<void> {
   const commitUrl = `<${commit.html_url}|${commit.sha.substring(0, 6)} >`
 
   // Example: Success: AnthonyKinson's `push` on `master` for pull_request
-  let title = `${context.eventName} on ${branchUrl} ${commitUrl}\n`
+  let text = `${context.eventName} on ${branchUrl} ${commitUrl}\n`
 
   // Example: Workflow: My Workflow #14 completed in `1m 30s`
-  const detailsString = `${context.workflow} ${workflowRunUrl} completed in *${workflowProcessingTime}*\n`
+  const pretext = `${context.workflow} ${workflowRunUrl} completed in *${workflowProcessingTime}*\n`
 
   // Build Pull Request string if required
   const pullRequests = (workflowRun.pull_requests as Endpoints['GET /repos/{owner}/{repo}/pulls/{pull_number}']['response']['data'][]).map(
@@ -159,7 +159,7 @@ async function main(): Promise<void> {
 
   if (0 < pullRequests.length) {
     // NOTE: 1個以上入ることある？
-    title = pullRequests[0].title
+    text = pullRequests[0].title
   }
 
   // We're using old style attachments rather than the new blocks because:
@@ -169,12 +169,12 @@ async function main(): Promise<void> {
   // Build our notification attachment
   const slackAttachment = {
     mrkdwn_in: ['text' as const],
+    pretext,
     color: resultColor,
     author_icon: `https://github.com/${process.env.GITHUB_ACTOR}.png?size=32`,
     author_link: `https://github.com/${process.env.GITHUB_ACTOR}`,
     author_name: process.env.GITHUB_ACTOR,
-    title,
-    text: detailsString,
+    text,
     fields: jobFields,
     footer_icon: 'https://github.githubassets.com/favicon.ico',
     footer: repoUrl
