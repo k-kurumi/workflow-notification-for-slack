@@ -151,8 +151,8 @@ async function main(): Promise<void> {
   // Build Pull Request string if required
   const pullRequests = (workflowRun.pull_requests as Endpoints['GET /repos/{owner}/{repo}/pulls/{pull_number}']['response']['data'][]).map(
     pr => ({
-      url: `${workflowRun.repository.url}/pull/${pr.number}`,
-      title: `<${workflowRun.repository.url}/pull/${pr.number}|${pr.title}#${pr.number}>`,
+      url: `${workflowRun.repository.html_url}/pull/${pr.number}`,
+      title: `<${workflowRun.repository.html_url}/pull/${pr.number}|${pr.title}#${pr.number}>`,
       text: `from \`${pr.head.ref}\` to \`${pr.base.ref}\``
     })
   )

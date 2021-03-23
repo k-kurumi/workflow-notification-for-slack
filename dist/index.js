@@ -9432,8 +9432,8 @@ function main() {
         const detailsString = `${github_1.context.workflow}${workflowRunUrl} completed in *${workflowProcessingTime}*\n`;
         // Build Pull Request string if required
         const pullRequests = workflowRun.pull_requests.map(pr => ({
-            url: `${workflowRun.repository.url}/pull/${pr.number}`,
-            title: `<${workflowRun.repository.url}/pull/${pr.number}|${pr.title}#${pr.number}>`,
+            url: `${workflowRun.repository.html_url}/pull/${pr.number}`,
+            title: `<${workflowRun.repository.html_url}/pull/${pr.number}|${pr.title}#${pr.number}>`,
             text: `from \`${pr.head.ref}\` to \`${pr.base.ref}\``
         }));
         if (0 < pullRequests.length) {
