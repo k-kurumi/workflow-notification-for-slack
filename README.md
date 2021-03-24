@@ -1,7 +1,7 @@
 # Slack Workflow Status
 This action will post workflow status notifications into your Slack channel. The notification includes the name of the Actor, Event, Branch, Workflow Name, Status and Run Durations. This action can optionally include the status and duration of individual jobs in a workflow to quickly help you identify where failures and slowdowns occur.
 
-<img src="./docs/images/example.png" title="Slack Example">
+<img src="./docs/images/example-pr.png" title="Slack Pull Request Example">
 
 ## Action Inputs
 
