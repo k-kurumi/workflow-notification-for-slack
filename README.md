@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Slack Workflow Notification
-        uses: come25136/slack-workflow-status@master
+        uses: come25136/workflow-notification-for-slack@main
         with:
           # Required Input
           repo_token: ${{secrets.GITHUB_TOKEN}}
